@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BerandaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/beranda', [BerandaController::class, 'index']);
+Route::get('/scan', [BerandaController::class, 'scan']);
 
 Route::get('/login', function () {
     return view('auth.login');
