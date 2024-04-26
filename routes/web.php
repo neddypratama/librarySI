@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Route::get('/beranda', [BerandaController::class, 'index']);
 Route::get('/scan', [BerandaController::class, 'scan']);
+Route::post('/validasi', [BerandaController::class, 'validasi'])->name('validasi');
+
 
 Route::get('/login', function () {
     return view('auth.login');
