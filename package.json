@@ -10,5 +10,9 @@
         "html5-qrcode": "^2.3.8",
         "laravel-vite-plugin": "^1.0.0",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "instascan": "^1.0.0",
+        "quagga": "^0.6.16"
     }
 }

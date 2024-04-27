@@ -16,23 +16,4 @@ class BerandaController extends Controller
     
         return view('dashboard', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu]);
     }
-
-    public function scan() {
-        return view('scan');
-    }
-
-    public function validasi(Request $request) {
-        $qr = $request->qr_code;
-        $data = 'anjay';
-
-        if ($qr == $data) {
-            return response()->json([
-                'status' => 200, 
-            ]);
-        } else {
-            return response()->json([
-                'status' => 400,
-            ]);
-        }
-    }
 }
