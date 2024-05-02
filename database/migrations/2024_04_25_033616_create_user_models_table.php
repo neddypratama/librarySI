@@ -16,11 +16,9 @@ return new class extends Migration
             $table->string('nim')->unique();
             $table->string('nama');
             $table->date('tgl_lahir');
-            $table->integer('level');
+            $table->integer('level_id');
             $table->string('password');
             $table->timestamps();
-
-            $table->foreign('level_id')->references('level_id')->on('m_level');
         });
     }
 

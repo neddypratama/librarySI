@@ -10,43 +10,30 @@
 </head>
 <body>
     <div>
-        <label for="result">Scanned Result:</label>
-        <input type="text" id="result" name="result" readonly>
+        <h2>Product Information</h2>
+        <p><strong>Name:</strong> <span id="productName"></span></p>
+        <p><strong>Description:</strong> <span id="productDescription"></span></p>
+
     </div>
     <div id="scanner-container"></div>
-    
+
     <script>
         // Function to handle successful scan
         function onScanSuccess(decodedText, decodedResult) {
-            // Perform validation (example: check if the scanned text contains only digits)
-            let id = decodedText;                
-            // Send the scanned data to the server
-            saveToDatabase(id);
-        }
+            $('#result').val(decodedText); // Update input field with scanned result
     
-        // Function to send the scanned data to the server
-        function saveToDatabase(scannedData) {
+            // Send the scanned barcode to backend API
             $.ajax({
-                url: "{{ route('validasi') }}", // Replace with your Laravel route
-                type: 'POST',
-                data: {
-                    scanned_data: scannedData,
-                    _token: '{{ csrf_token() }}'
-                },
+                url: `/action/validasi/${decodedText}`,
+                method: 'GET',
                 success: function(response) {
-                    console.log(response);
-                    if (response.status == 200) {
-                        $('#result').val(scannedData); // Update input field with scanned result
-                        html5QrcodeScanner.clear();
-                        alert('Data saved successfully!');
-                    } else {
-                        alert('Failed to save data!');
-
-                    }
+                    // Update input field with product information
+                    $('#productName').text(response.name);
+                    $('#productDescription').text(response.description);
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alert('An error occurred while saving data!');
+                    console.error('Error:', error);
+                    alert('Product not found');
                 }
             });
         }
@@ -60,7 +47,7 @@
         // Initialize the barcode scanner
         let html5QrcodeScanner = new Html5QrcodeScanner(
             "scanner-container", // Container ID for the scanner
-            { fps: 10, qrbox: {width: 400, height: 400} }, // Scanner configuration
+            { fps: 10, qrbox: {width: 500, height: 500} }, // Scanner configuration
             false // Verbose mode
         );
     
@@ -68,6 +55,5 @@
         html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     </script>
     
-    </script>
 </body>
 </html>

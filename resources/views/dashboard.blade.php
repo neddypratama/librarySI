@@ -8,6 +8,12 @@
         <div class="card-tools"></div>
       </div>
       <div class="card-body">
+          @if (session('success'))
+                <div class="alert alert-success">{{session('success')}}</div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">{{session('error')}}</div>
+            @endif
         <img src="https://jti.polinema.ac.id/wp-content/uploads/2015/11/Untitled-design3-e1686017710507.png" alt="" class="img-fluid">
       </div>
       <div>

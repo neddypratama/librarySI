@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('denda_models', function (Blueprint $table) {
-            $table->id();
+        Schema::create('m_buku', function (Blueprint $table) {
+            $table->id('buku_id');
+            $table->string('buku_kode')->unique();
+            $table->string('judul');
+            $table->string('pengarang');
+            $table->string('penerbit');
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('denda_models');
+        Schema::dropIfExists('m_bukus');
     }
 };

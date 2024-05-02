@@ -21,7 +21,7 @@
   @stack('css') <!-- Digunakan untuk memanggil custom css dari perintah push('css') pada masing-masing view -->
 </head>
 <body style="background-color: #828282" class="">
-    <div class="row" style="height: 100vh">
+    {{-- <div class="row" style="height: 100vh">
         <div class="col-4 d-flex align-items-center m-4 rounded" style="background-color: #D9D9D9">
             <div class="d-block px-5">
                 <div class="font-weight-bold" style="font-size: 28px; width: 250px">
@@ -52,78 +52,54 @@
                         </div>
                         <button class="btn font-weight-bold font-italic btn-block" style="height: 50px; background-color: #FFCD29; font-size: 20px">Login</button>
                         <div class="pt-2 font-weight-bolder text-right">
-                            <a href="#" style="color: black">Ganti Password?</a>
-                          </div> 
+                          <a href="#" style="color: black">Ganti Password?</a>
+                        </div> 
                       </form>
                 </div>
             </div>
         </div>
-    </div>
-      
-    <!-- /.login-logo -->
-    {{-- <div class="card card-outline card-primary">
-      <div class="card-header text-center">
-        <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
-      </div>
-      <div class="card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
-  
-        <form action="../../index3.html" method="post">
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="remember">
-                <label for="remember">
-                  Remember Me
-                </label>
-              </div>
-            </div>
-            <!-- /.col -->
-            <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-            </div>
-            <!-- /.col -->
-          </div>
-        </form>
-  
-        <div class="social-auth-links text-center mt-2 mb-3">
-          <a href="#" class="btn btn-block btn-primary">
-            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-          </a>
-          <a href="#" class="btn btn-block btn-danger">
-            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-          </a>
-        </div>
-        <!-- /.social-auth-links -->
-  
-        <p class="mb-1">
-          <a href="forgot-password.html">I forgot my password</a>
-        </p>
-        <p class="mb-0">
-          <a href="register.html" class="text-center">Register a new membership</a>
-        </p>
-      </div>
-      <!-- /.card-body -->
     </div> --}}
-    <!-- /.card -->
+    <div class="container-fluid">
+      <div class="row" style="height: 100vh">
+          <div class="col-md-4 col-sm-12 m-3 p-5 d-flex align-items-center justify-content-center"  style="background-color: #D9D9D9">
+              <div class="p-4">
+                <div class="p-5">
+                  <div class="font-weight-bold" style="font-size: 32px;">
+                      SISTEM INFORMASI MODUL TRANSAKSI SIRKULASI
+                  </div>
+                  <hr style="border: none; height: 1px; color: #333; background-color: #333; width: 100%;">
+                  <div class="font-italic pt-2 " style="font-size: 16px;">
+                      Sekarang Kamu Meminjam buku cukup menggunakan smarphone tidak ada kartu anggota
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-7 col-sm-12 d-flex align-items-center justify-content-center">
+              <div >
+                  <div class="pt-5 pb-5 font-weight-bold font-italic text-center" style="font-size: 45px;">SELAMAT DATANG!</div>
+                  <form action="{{ route('proses_login')}}" method="post" class="mt-5">
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="NIM" name="nim">
+                      </div>
+                      <div class="input-group mb-5">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                          </div>
+                          <input type="password" class="form-control" placeholder="Password" name="password">
+                      </div>
+                      <button class="btn btn-block font-weight-bold font-italic" style="background-color: #FFCD29; font-size: 20px;">Login</button>
+                      <div class="pt-2 font-weight-bolder text-right">
+                          <a href="#" style="color: black;">Ganti Password?</a>
+                      </div> 
+                  </form>
+              </div>
+          </div>
+      </div>
   </div>
-
+  
 
 <!-- jQuery -->
 <script src="{{ asset('templete/plugins/jquery/jquery.min.js') }}"></script>

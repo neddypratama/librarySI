@@ -4,6 +4,9 @@
   <div class="card card-outline card-primary"> 
       <div class="card-header"> 
         <h3 class="card-title">{{ $page->title }}</h3> 
+        <div class="card-tools"> 
+          <a class="btn btn-sm btn-primary mt-1" href="{{ url('level/create') }}">Tambah</a> 
+        </div> 
       </div> 
       <div class="card-body"> 
         @if (session('success'))
@@ -12,15 +15,16 @@
         @if (session('error'))
         <div class="alert alert-danger">{{session('error')}}</div>
         @endif
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_kembali"> 
-              <thead> 
-                <tr>
-                  <th>ID</th><th>Judul Buku</th><th>Pengarang Buku</th><th>Penerbit Buku</th><th>Tanggal Pinjam</th><th>Aksi</th>
-                </tr> 
-              </thead> 
-            </table> 
-        </div>
+        <table class="table table-bordered table-striped table-hover table-sm" id="table_level"> 
+          <thead> 
+            <tr>
+              <th>ID</th>
+              <th>Nama Kode</th>
+              <th>Nama Level</th>
+              <th>Aksi</th>
+            </tr> 
+          </thead> 
+      </table> 
     </div> 
   </div> 
 @endsection 
@@ -30,16 +34,45 @@
 @push('js') 
   <script> 
     $(document).ready(function() { 
-      var dataLevel = $('#table_kembali').DataTable({ 
+      var dataLevel = $('#table_level').DataTable({ 
           pageLength: 25,
           processing: true,
           serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
+          dom: '<"html5buttons">Bfrtip',
+        language: {
+            buttons: {
+                colvis : 'show / hide', // label button show / hide colvisRestore: "Reset Kolom" //lael untuk reset kolom ke default
+            }
+        },
+        buttons : [
+            {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] },
+            {
+                extend:'csv' ,
+                title:'Tabel Level',
+                // exportOptions : columns: [0,1,2,3,4]
+            },
+            {
+                extend: 'pdf', 
+                title:'Tabel Level'
+                // exportOptions : columns: [0,1,2,3,4]
+            },
+            {
+                extend: 'excel', 
+                title: 'Tabel Level'
+                // exportOptions : columns: [0,1,2,3,4]
+            },
+            {
+                extend:'print',
+                title: 'Tabel Level'
+                // exportOptions : columns: [0,1,2,3,4]
+            },
+        ],
           ajax: { 
-              "url": "{{ url('action/listPengembalian') }}", 
+              "url": "{{ url('level/list') }}", 
               "dataType": "json", 
               "type": "POST",
               "data":function(d){
-                d.transaksi_id = $('#transaksi_id').val();
+                d.level_id = $('#level_id').val();
               }
           }, 
           columns: [ 
@@ -49,22 +82,12 @@
               orderable: false, 
               searchable: false     
             },{ 
-              data: "buku.judul",                
+              data: "level_kode",                
               className: "", 
               orderable: true,    // orderable: true, jika ingin kolom ini bisa diurutkan 
               searchable: true    // searchable: true, jika ingin kolom ini bisa dicari 
             },{ 
-              data: "buku.pengarang",                
-              className: "", 
-              orderable: true,    // orderable: true, jika ingin kolom ini bisa diurutkan 
-              searchable: true    // searchable: true, jika ingin kolom ini bisa dicari 
-            },{ 
-              data: "buku.penerbit",                
-              className: "", 
-              orderable: true,    // orderable: true, jika ingin kolom ini bisa diurutkan 
-              searchable: true    // searchable: true, jika ingin kolom ini bisa dicari 
-            },{ 
-              data: "tgl_peminjaman",                
+              data: "level_nama",                
               className: "", 
               orderable: true,    // orderable: true, jika ingin kolom ini bisa diurutkan 
               searchable: true    // searchable: true, jika ingin kolom ini bisa dicari 
@@ -72,11 +95,11 @@
               data: "aksi",                
               className: "", 
               orderable: false,    // orderable: true, jika ingin kolom ini bisa diurutkan 
-              searchable: false,   // searchable: true, jika ingin kolom ini bisa dicari 
-            },
+              searchable: false    // searchable: true, jika ingin kolom ini bisa dicari 
+            } 
           ] 
       }); 
-      $('#transaksi_id').on('change', function(){
+      $('#level_id').on('change', function(){
         dataLevel.ajax.reload();
       });
     }); 

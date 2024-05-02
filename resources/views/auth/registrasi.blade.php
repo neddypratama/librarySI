@@ -27,38 +27,67 @@
         <div class="font-weight-bold" style="font-size: 45px">BUAT AKUN BARU!</div>
       </div>
       <div class="card-body mt-3" style="background-color: #D9D9D9;">
-        <form action="../../index3.html" method="post">
-            <div class="input-group mb-3">
-                <div class="input-group-text">
-                    <span class="fas fa-user"></span>
-                </div>
-                <input type="text" class="form-control" placeholder="Nama">
+        @if (Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                {{ Session::get('success') }}
             </div>
+        @endif
+        @if (Session::has('sama'))
+            <div class="alert alert-danger" role="alert">
+                {{ Session::get('sama') }}
+            </div>
+        @endif
+        <form action="{{ route('register')}}" method="post">
+            @csrf
             <div class="input-group mb-3">
                 <div class="input-group-text">
                     <span class="fas fa-envelope"></span>
                 </div>
-                <input type="text" class="form-control" placeholder="NIM">
+                <input type="text" class="form-control" placeholder="NIM" name="nim">
             </div>
+            @error('nim')
+                <small class="form-text text-danger">{{ $message }}</small> 
+            @enderror 
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                </div>
+                <input type="text" class="form-control" placeholder="Nama" name="nama">
+            </div>
+            @error('nama')
+                <small class="form-text text-danger">{{ $message }}</small> 
+            @enderror 
             <div class="input-group mb-3">
                 <div class="input-group-text">
                     <span class="fas fa-calendar-day"></span>
                 </div>
-                <input type="date" class="form-control" placeholder="Tanggal Lahir">
+                <input type="date" class="form-control" placeholder="Tanggal Lahir" name="tgl_lahir">
             </div>
+            @error('tgl_lahir')
+                <small class="form-text text-danger">{{ $message }}</small> 
+            @enderror 
             <div class="input-group mb-3">
                 <div class="input-group-text">
                     <span class="fas fa-lock"></span>
                 </div>
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" class="form-control" placeholder="Password" name="password">
             </div>
+            @error('password')
+                <small class="form-text text-danger">{{ $message }}</small> 
+            @enderror 
             <div class="input-group mb-3">
                 <div class="input-group-text">
                     <span class="fas fa-lock"></span>
                 </div>
-                <input type="password" class="form-control" placeholder="Confirm Password">
+                <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation">
             </div>
+            @error('password_confirmation')
+                <small class="form-text text-danger">{{ $message }}</small> 
+            @enderror 
             <button class="btn font-weight-bold btn-block mt-3 mb-3" style="height: 50px; background-color: #828282; font-size: 20px">REGISTER</button>
+            <div class=" text-center">
+                Kembali ke <a href="{{ route('login')}}" >Login</a>
+              </div> 
           </form>
     </div>
   </div>

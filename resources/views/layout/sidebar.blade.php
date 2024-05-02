@@ -41,30 +41,58 @@
               <i class="nav-icon fas fa-house-user"></i>
               <p>Dashboard</p>
             </a>
-            <li class="nav-item">
-              <a href="" class="nav-link {{ ($activeMenu == 'peminjaman')?'active' : '' }}">
-                <i class="fas fa-book-reader nav-icon"></i>
-                <p>Transaksi Peminjaman</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="" class="nav-link {{ ($activeMenu == 'pengembalian')?'active' : '' }}">
-                <i class="fas fa-book-open nav-icon"></i>
-                <p>Transaksi Pengembalian</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="" class="nav-link {{ ($activeMenu == 'history')?'active' : '' }}">
-                <i class="fas fa-history nav-icon"></i>
-                <p>Cek History</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="" class="nav-link {{ ($activeMenu == 'denda')?'active' : '' }}">
-                <i class="fas fa-wallet nav-icon"></i>
-                <p>Cek Denda</p>
-              </a>
-            </li>
+            {{-- @if (auth()->user()->level_id==2) --}}
+              <li class="nav-item">
+                <a href="" class="nav-link {{ ($activeMenu == 'peminjaman')?'active' : '' }}">
+                  <i class="fas fa-book-reader nav-icon"></i>
+                  <p>Transaksi Peminjaman</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{ ($activeMenu == 'pengembalian')?'active' : '' }}">
+                  <i class="fas fa-book-open nav-icon"></i>
+                  <p>Transaksi Pengembalian</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{ ($activeMenu == 'history')?'active' : '' }}">
+                  <i class="fas fa-history nav-icon"></i>
+                  <p>Cek History</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{ ($activeMenu == 'denda')?'active' : '' }}">
+                  <i class="fas fa-wallet nav-icon"></i>
+                  <p>Cek Denda</p>
+                </a>
+              </li>
+            {{-- @endif
+            @if (auth()->user()->level_id==1) --}}
+              <li class="nav-item">
+                <a href="" class="nav-link {{ ($activeMenu == 'level')?'active' : '' }}">
+                  <i class="fas fa-layer-group nav-icon"></i>
+                  <p>Data Level</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{ ($activeMenu == 'user')?'active' : '' }}">
+                  <i class="fas fa-user nav-icon"></i>
+                  <p>Data User</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{ ($activeMenu == 'buku')?'active' : '' }}">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Data Buku</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link {{ ($activeMenu == 'transaksi')?'active' : '' }}">
+                  <i class="fas fa-clipboard-list nav-icon"></i>
+                  <p>Data Transaksi</p>
+                </a>
+              </li>
+            {{-- @endif --}}
             <li class="nav-item">
               <a href="" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
