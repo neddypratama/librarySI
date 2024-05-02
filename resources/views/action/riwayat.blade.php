@@ -29,7 +29,7 @@
           processing: true,
           serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
           ajax: { 
-              "url": "{{ url('action/listPengembalian') }}", 
+              "url": "{{ url('action/listRiwayat') }}", 
               "dataType": "json", 
               "type": "POST",
               "data":function(d){
