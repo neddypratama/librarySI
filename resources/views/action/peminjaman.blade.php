@@ -22,7 +22,7 @@
                     <div class="input-group-text" style="width: 135px">
                         <span>Nama Peminjam</span>
                     </div>
-                    <input type="text" class="form-control" name="nama" >
+                    <input type="text" class="form-control" name="nama" value="{{auth()->user()->nama}}" readonly>
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-text" style="width: 135px">

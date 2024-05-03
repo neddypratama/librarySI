@@ -21,44 +21,6 @@
   @stack('css') <!-- Digunakan untuk memanggil custom css dari perintah push('css') pada masing-masing view -->
 </head>
 <body style="background-color: #828282" class="">
-    {{-- <div class="row" style="height: 100vh">
-        <div class="col-4 d-flex align-items-center m-4 rounded" style="background-color: #D9D9D9">
-            <div class="d-block px-5">
-                <div class="font-weight-bold" style="font-size: 28px; width: 250px">
-                    SISTEM INFORMASI MODUL TRANSAKSI SIRKULASI
-                </div>
-                <div style="border: none; height: 1px; color: #333; background-color: #333; width: 240px"></div>
-                <div class="font-italic pt-1" style="width: 250px; font-size: 15px">
-                   Sekarang Kamu Meminjam buku cukup menggunakan smarphone tidak ada kartu anggota
-                </div>
-            </div>
-        </div>
-        <div class="col-7 d-flex justify-content-center m-3" style="background-color: #828282">
-            <div class="d-block mt-5">
-                <div class="pt-5 font-weight-bold font-italic text-center" style="font-size: 45px">SELAMAT DATANG!</div>
-                <div class="mt-5 " style="width: 400px">
-                    <form action="../../index3.html" method="post" class="mt-5">
-                        <div class="input-group mb-3" style="height: 60px">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="NIM" style="height: 60px">
-                        </div>
-                        <div class="input-group mb-5" style="height: 60px">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                            <input type="password" class="form-control" placeholder="Password" style="height: 60px">
-                        </div>
-                        <button class="btn font-weight-bold font-italic btn-block" style="height: 50px; background-color: #FFCD29; font-size: 20px">Login</button>
-                        <div class="pt-2 font-weight-bolder text-right">
-                          <a href="#" style="color: black">Ganti Password?</a>
-                        </div> 
-                      </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <div class="container-fluid">
       <div class="row" style="height: 100vh">
           <div class="col-md-4 col-sm-12 m-3 p-5 d-flex align-items-center justify-content-center"  style="background-color: #D9D9D9">
@@ -78,28 +40,55 @@
               <div >
                   <div class="pt-5 pb-5 font-weight-bold font-italic text-center" style="font-size: 45px;">SELAMAT DATANG!</div>
                   <form action="{{ route('proses_login')}}" method="post" class="mt-5">
+                    @if (Session::has('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                        {{ Session::get('error') }}
+                        </div>
+                    @endif
+                    @csrf
                       <div class="input-group mb-3">
                           <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                           </div>
-                          <input type="text" class="form-control" placeholder="NIM" name="nim">
+                          <input type="text" class="form-control" placeholder="NIM" name="nim" value="{{ old('nim') }}" >
                       </div>
                       <div class="input-group mb-5">
                           <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-lock"></i></span>
                           </div>
-                          <input type="password" class="form-control" placeholder="Password" name="password">
-                      </div>
-                      <button class="btn btn-block font-weight-bold font-italic" style="background-color: #FFCD29; font-size: 20px;">Login</button>
-                      <div class="pt-2 font-weight-bolder text-right">
-                          <a href="#" style="color: black;">Ganti Password?</a>
+                          <input type="password" class="form-control" placeholder="Password" name="password" id="inputPassword" value="{{ old('password') }}">
+                          <button type="button" style="border: none" class="btn btn-light" id="tampilButton">
+                            <span class="fas fa-eye"></span>
+                        </button>
                       </div> 
+                      <button class="btn btn-block font-weight-bold font-italic" style="background-color: #FFCD29; font-size: 20px;">Login</button>
+                      <div>
+                        <div class="pt-2 font-weight-bolder d-flex justify-content-between">
+                            <a href="{{ route('register')}}" style="color: #D9D9D9;" >Register</a>
+                            <a href="{{ route('lupa_password')}}" style="color: black;" >Lupa Password?</a>
+                        </div> 
+                      </div>
                   </form>
               </div>
           </div>
       </div>
   </div>
   
+  <script>
+    const passwordInput = document.getElementById('inputPassword');
+    const togglePassword = document.getElementById('tampilButton');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.innerHTML = type === 'password' ? '<span class="fas fa-eye"></span>' : '<span class="fas fa-eye-slash"></span>';
+    });
+</script>
 
 <!-- jQuery -->
 <script src="{{ asset('templete/plugins/jquery/jquery.min.js') }}"></script>

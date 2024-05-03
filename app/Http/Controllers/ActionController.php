@@ -83,32 +83,7 @@ class ActionController extends Controller
             'transaksi' => $transaksi,
             'activeMenu' => $activeMenu]);
     }
-
-    public function listPengembalian(Request $request) 
-    { 
-        $kembalis = TransaksiModel::where('tgl_pengembalian', null)->with('user')->with('buku'); 
- 
-        return DataTables::of($kembalis) 
-        ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
-        ->addColumn('aksi', function ($kembali) {  // menambahkan kolom aksi 
-            $btn = '<a href="'.url('/action/' . $kembali->transaksi_id . '/scan_kembali').'" class="btn btn-primary btn-sm">Scan</a> '; 
-            return $btn; 
-        }) 
-        ->rawColumns(['aksi'])
-        ->make(true); 
-    } 
-
-    // Ambil data level dalam bentuk json untuk datatables 
-    public function listDenda(Request $request) 
-    { 
-        $dendas = TransaksiModel::select('user_id', 'buku_id', 'denda', 'tgl_peminjaman', 'tgl_pengembalian')->with('user')->with('buku'); 
- 
-        return DataTables::of($dendas) 
-        ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
-        ->make(true); 
-    } 
-
-    public function riwayat(){
+    public function riwayat() {
         $breadcrumb = (object)[
             'title'=>'Cek History Transaksi',
             'list' => ['Home', 'History Transaksi']  
@@ -132,10 +107,34 @@ class ActionController extends Controller
             'activeMenu' => $activeMenu]);
     }
 
+    public function listPengembalian(Request $request) 
+    { 
+        $kembalis = TransaksiModel::where('tgl_pengembalian', null)->where('user_id', auth()->user()->user_id)->with('user')->with('buku'); 
+ 
+        return DataTables::of($kembalis) 
+        ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
+        ->addColumn('aksi', function ($kembali) {  // menambahkan kolom aksi 
+            $btn = '<a href="'.url('/action/' . $kembali->transaksi_id . '/scan_kembali').'" class="btn btn-primary btn-sm">Scan</a> '; 
+            return $btn; 
+        }) 
+        ->rawColumns(['aksi'])
+        ->make(true); 
+    } 
+
+    // Ambil data level dalam bentuk json untuk datatables 
+    public function listDenda(Request $request) 
+    { 
+        $dendas = TransaksiModel::select('user_id', 'buku_id', 'denda', 'tgl_peminjaman', 'tgl_pengembalian')->where('user_id', auth()->user()->user_id)->with('user')->with('buku'); 
+ 
+        return DataTables::of($dendas) 
+        ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
+        ->make(true); 
+    } 
+
     // Ambil data level dalam bentuk json untuk datatables 
     public function listRiwayat(Request $request) 
     { 
-        $riwayats = TransaksiModel::select('user_id', 'buku_id', 'denda', 'tgl_peminjaman', 'tgl_pengembalian')->with('user')->with('buku'); 
+        $riwayats = TransaksiModel::select('user_id', 'buku_id', 'tgl_peminjaman', 'tgl_pengembalian')->where('user_id', auth()->user()->user_id)->with('user')->with('buku'); 
  
         return DataTables::of($riwayats) 
         ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)

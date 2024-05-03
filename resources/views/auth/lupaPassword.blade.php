@@ -23,37 +23,36 @@
 <body style="background-color: #828282" class="hold-transition login-page">
   <div class="login-box " style="background-color: #D9D9D9; border-radius: 50px">
     <div class="card card-outline" style="background-color: #D9D9D9;">
-      <div class="pt-1 px-4 text-center" >
-        <div class="font-weight-bold" style="font-size: 40px">Ganti Password</div>
+      <div class="mt-5 px-4 text-center" >
+        <div class="font-weight-bold" style="font-size: 40px">Lupa Password</div>
       </div>
       <div class="card-body mt-5" style="background-color: #D9D9D9;">
-        <form action="#" method="post ">
+        <form action="{{ route('proses_lupa') }}" method="post ">
+            @if (Session::has('error'))
+              <div class="alert alert-danger" role="alert">
+                {{ Session::get('error') }}
+              </div>
+            @endif
           @csrf
             <div class="input-group mb-3" style="height: 50px">
                 <div class="input-group-text">
                     <span class="fas fa-envelope"></span>
                 </div>
-                <input type="text" class="form-control" placeholder="NIM" style="height: 50px">
+                <input type="text" class="form-control" placeholder="NIM" name="nim" style="height: 50px">
+            </div>
+            <div class="input-group mb-3" style="height: 50px">
+                <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                </div>
+                <input type="text" class="form-control" placeholder="Nama" name="nama" style="height: 50px">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-text">
                     <span class="fas fa-calendar-day"></span>
                 </div>
-                <input type="date" class="form-control" placeholder="Tanggal Lahir">
+                <input type="date" class="form-control" placeholder="Tanggal Lahir" name="tgl_lahir" style="height: 50px">
             </div>
-            <div class="input-group mb-3" style="height: 50px">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
-                <input type="password" class="form-control" placeholder="Password Lama" style="height: 50px">
-            </div>
-            <div class="input-group mb-3" style="height: 50px">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
-                <input type="password" class="form-control" placeholder="Password Baru" style="height: 50px">
-            </div>
-            <button class="btn font-weight-bold btn-block mt-5" style="height: 50px; background-color: #828282; font-size: 20px">Reset Password</button>
+            <button class="btn font-weight-bold btn-block mt-5" style="height: 50px; background-color: #828282; font-size: 20px">Proses</button>
             <div class="pt-2 font-weight-bolder text-left">
                 <a href="{{ route('login')}}" style="color: #828282;" >Kembali</a>
             </div> 

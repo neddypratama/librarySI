@@ -34,11 +34,11 @@
         </div>
         <div class="row pt-2">
           <div class="col-12 justify-content-center">
-            <a href="#" ><button style="height: 60px; color: black; font-size: 20px" class="btn btn-secondary btn-block font-italic " >Sign Up</button></a>
+            <a href="{{ route('register') }}" ><button style="height: 60px; color: black; font-size: 20px" class="btn btn-secondary btn-block font-italic " >Sign Up</button></a>
           </div>
         </div>
         <div class="pt-2 font-italic" style="color: black">
-          <h4 class="pl-4">Sudah Punya Akun? <a href="#" style="color: #828282">Login</a></h4>
+          <h4 class="pl-4">Sudah Punya Akun? <a href="{{ route('login') }}" style="color: #828282">Login</a></h4>
         </div> 
       </div>
     </div>

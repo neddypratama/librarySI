@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('buku_id')->index();
             $table->date('tgl_peminjaman');
-            $table->date('tgl_pengembalian');
+            $table->date('tgl_pengembalian')->nullable();
             $table->integer('denda');
             $table->timestamps();
 

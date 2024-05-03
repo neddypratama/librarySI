@@ -37,13 +37,13 @@
                 {{ Session::get('sama') }}
             </div>
         @endif
-        <form action="{{ route('register')}}" method="post">
+        <form action="{{ route('proses_register')}}" method="post">
             @csrf
             <div class="input-group mb-3">
                 <div class="input-group-text">
                     <span class="fas fa-envelope"></span>
                 </div>
-                <input type="text" class="form-control" placeholder="NIM" name="nim">
+                <input type="text" class="form-control" placeholder="NIM" name="nim" @if($errors->has('nim')) value="" @else value="{{ old('nim') }}" @endif>
             </div>
             @error('nim')
                 <small class="form-text text-danger">{{ $message }}</small> 
@@ -52,7 +52,7 @@
                 <div class="input-group-text">
                     <span class="fas fa-user"></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Nama" name="nama">
+                <input type="text" class="form-control" placeholder="Nama" name="nama" @if($errors->has('nama')) value="" @else value="{{ old('nama') }}" @endif>
             </div>
             @error('nama')
                 <small class="form-text text-danger">{{ $message }}</small> 
@@ -61,7 +61,7 @@
                 <div class="input-group-text">
                     <span class="fas fa-calendar-day"></span>
                 </div>
-                <input type="date" class="form-control" placeholder="Tanggal Lahir" name="tgl_lahir">
+                <input type="date" class="form-control" placeholder="Tanggal Lahir" name="tgl_lahir" @if($errors->has('tgl_lahir')) value="" @else value="{{ old('tgl_lahir') }}" @endif>
             </div>
             @error('tgl_lahir')
                 <small class="form-text text-danger">{{ $message }}</small> 
@@ -70,7 +70,10 @@
                 <div class="input-group-text">
                     <span class="fas fa-lock"></span>
                 </div>
-                <input type="password" class="form-control" placeholder="Password" name="password">
+                <input type="password" class="form-control" placeholder="Password" name="password" id="inputPassword" @if($errors->has('password')) value="" @else value="{{ old('password') }}" @endif>
+                <button type="button" style="border: none" class="btn btn-light" id="tampilButton">
+                        <span class="fas fa-eye"></span>
+                </button>
             </div>
             @error('password')
                 <small class="form-text text-danger">{{ $message }}</small> 
@@ -79,7 +82,10 @@
                 <div class="input-group-text">
                     <span class="fas fa-lock"></span>
                 </div>
-                <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation">
+                <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation" id="confirmPassword" @if($errors->has('password_confirmation')) value="" @else value="{{ old('password_confirmation') }}" @endif>
+                <button type="button" style="border: none" class="btn btn-light" id="tampilButtonConfirm">
+                    <span class="fas fa-eye"></span>
+                </button>
             </div>
             @error('password_confirmation')
                 <small class="form-text text-danger">{{ $message }}</small> 
@@ -92,7 +98,25 @@
     </div>
   </div>
 
+  <script>
+    const passwordInput = document.getElementById('inputPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const togglePassword = document.getElementById('tampilButton');
+    const togglePasswordConfirm = document.getElementById('tampilButtonConfirm');
 
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.innerHTML = type === 'password' ? '<span class="fas fa-eye"></span>' : '<span class="fas fa-eye-slash"></span>';
+    });
+
+    togglePasswordConfirm.addEventListener('click', function() {
+        const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPasswordInput.setAttribute('type', type);
+        togglePasswordConfirm.innerHTML = type === 'password' ? '<span class="fas fa-eye"></span>' : '<span class="fas fa-eye-slash"></span>';
+    });
+</script>
+    
 <!-- jQuery -->
 <script src="{{ asset('templete/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->

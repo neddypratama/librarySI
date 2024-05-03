@@ -25,6 +25,15 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function gantiPassword()
+    {
+        return view('auth.gantiPassword');
+    }
+
+    public function lupaPassword()
+    {
+        return view('auth.lupaPassword');
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -35,31 +44,24 @@ class AuthController extends Controller
             'nim' => 'required|string|min:8|unique:m_user,nim',
             'nama' => 'required|string|max:100',
             'tgl_lahir' => 'required|date',
-            'password' => 'required|min:5',
-            'password_confirmation' => 'required|min:5|confirmed',
+            'password' => 'required|min:5|confirmed',
+            'password_confirmation' => 'required|min:5',
         ]);
-
-        if(!$request->confirm_password === $request->password) {
-            return back()->with('sama', 'Confirm password tidak sama');
-        } else {
-            $user = UserModel::all();
-
-            UserModel::create([
-                'nim'=> $request -> nim,
-                'nama'=> $request -> nama,
-                'password' => bcrypt($request -> password),
-                'tgl_lahir' => $request->tgl_lahir,
-                'level_id' => 2,
-            ]);
+        
+        $user = UserModel::all();
+        
+        UserModel::create([
+            'nim'=> $request -> nim,
+            'nama'=> $request -> nama,
+            'password' => bcrypt($request -> password),
+            'tgl_lahir' => $request->tgl_lahir,
+            'level_id' => 2,
+        ]);
             
-            return back()->with('success', 'Register Successfully');
-        }
+        return back()->with('success', 'Register Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function login_proses(Request $request)
+    public function lupa_proses(Request $request)
     {
         $auth = [
             'nim' => $request->nim,
@@ -67,10 +69,25 @@ class AuthController extends Controller
         ];
 
         if(Auth::attempt($auth)) {
-            if (auth()->user()->activate == 0) {
-                return back()->with('activate', 'Akun belum di aktivasi');
-            }
-            return redirect('beranda')->with('success', 'Login Berhasil');
+            UserModel::update(['password' => bcrypt($request->nim)]);
+            return redirect('/login')->with('success', 'Password telah diganti dengan nim');
+        }
+        return back()->with('error', 'Data tidak sama');
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function login_proses(Request $request)
+    {  
+        $auth = [
+            'nim' => $request->nim,
+            'password' => $request->password,
+        ];
+
+        if(Auth::attempt($auth)) {
+            return redirect('/beranda')->with('success', 'Login Berhasil');
         }
 
         return back()->with('error', 'Username or Password is wrong');

@@ -31,9 +31,7 @@ Route::get('/scan', function () {
 });
 Route::get('/validasi/{kode}', [BerandaController::class, 'validasi']);
 
-Route::get('/beranda', [BerandaController::class, 'index']);
-
-Route::group(['prefix' => 'action'], function() {
+Route::group(['prefix' => 'action', 'middleware' => ['ceklevel:1']], function() {
     Route::get('/denda', [ActionController::class, 'denda']);
     Route::post('/listDenda', [ActionController::class, 'listDenda']);
     Route::get('/riwayat', [ActionController::class, 'riwayat']);
@@ -47,7 +45,7 @@ Route::group(['prefix' => 'action'], function() {
     Route::get('/kembali/{id}/{kode}', [ActionController::class, 'kembali']); 
 });
 
-Route::group(['prefix' => 'user'], function() {
+Route::group(['prefix' => 'user', 'middleware' => ['ceklevel:2']], function() {
     Route::get('/', [UserController::class, 'index']);
     Route::post('/list', [UserController::class, 'list']);
     Route::get('/create', [UserController::class, 'create']);
@@ -58,7 +56,7 @@ Route::group(['prefix' => 'user'], function() {
     Route::delete('/{id}', [UserController::class, 'destroy']);
 });
 
-Route::group(['prefix' => 'level'], function() {
+Route::group(['prefix' => 'level', 'middleware' => ['ceklevel:2']], function() {
     Route::get('/', [LevelController::class, 'index']);
     Route::post('/list', [LevelController::class, 'list']);
     Route::get('/create', [LevelController::class, 'create']);
@@ -69,7 +67,7 @@ Route::group(['prefix' => 'level'], function() {
     Route::delete('/{id}', [LevelController::class, 'destroy']);
 });
 
-Route::group(['prefix' => 'buku'], function() {
+Route::group(['prefix' => 'buku', 'middleware' => ['ceklevel:2']], function() {
     Route::get('/', [BukuController::class, 'index']);
     Route::post('/list', [BukuController::class, 'list']);
     Route::get('/create', [BukuController::class, 'create']);
@@ -80,7 +78,7 @@ Route::group(['prefix' => 'buku'], function() {
     Route::delete('/{id}', [BukuController::class, 'destroy']);
 });
 
-Route::group(['prefix' => 'transaksi'], function() {
+Route::group(['prefix' => 'transaksi', 'middleware' => ['ceklevel:2']], function() {
     Route::get('/', [TransaksiController::class, 'index']);
     Route::post('/list', [TransaksiController::class, 'list']);
     Route::get('/create', [TransaksiController::class, 'create']);
@@ -92,8 +90,16 @@ Route::group(['prefix' => 'transaksi'], function() {
 });
 
 
-Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
 Route::post('/proses_register', [AuthController::class, 'register_proses'])->name('proses_register');
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('proses_/login', [AuthController::class, 'login_proses'])->name('proses_login');
+Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
+Route::post('proses_login', [AuthController::class, 'login_proses'])->name('proses_login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/ganti_password', [AuthController::class, 'gantiPassword'])->name('ganti_password');
+Route::post('/proses_ganti', [AuthController::class, 'ganti_proses'])->name('proses_ganti');
+Route::get('/lupa_password', [AuthController::class, 'lupaPassword'])->name('lupa_password');
+Route::post('/proses_lupa', [AuthController::class, 'lupa_proses'])->name('proses_lupa');
+
+Route::group(['middleware' => ['ceklevel:1,2']], function() {
+    Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
+});

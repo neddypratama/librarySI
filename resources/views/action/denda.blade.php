@@ -68,7 +68,7 @@
               orderable: true,    // orderable: true, jika ingin kolom ini bisa diurutkan 
               searchable: true    // searchable: true, jika ingin kolom ini bisa dicari 
             },
-          ] 
+          ],
       }); 
       $('#transaksi_id').on('change', function(){
         dataLevel.ajax.reload();
