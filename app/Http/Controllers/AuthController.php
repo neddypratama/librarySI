@@ -25,9 +25,24 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function gantiPassword()
-    {
-        return view('auth.gantiPassword');
+    public function gantiPassword(){
+
+        $breadcrumb = (object)[
+            'title' => 'Ganti Password',
+            'list' => ['Home', 'Perubahan']
+        ];
+
+        $page = (object)[
+            'title' => 'Ganti Password'
+        ];
+
+        $activeMenu = 'gantiPassowrd';
+
+        return view('auth.gantiPassword',[
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'activeMenu' => $activeMenu
+        ]);
     }
 
     public function lupaPassword()
@@ -61,20 +76,36 @@ class AuthController extends Controller
         return back()->with('success', 'Register Successfully');
     }
 
-    public function lupa_proses(Request $request)
+    public function proses_lupa(Request $request)
     {
-        $auth = [
-            'nim' => $request->nim,
-            'password' => $request->password,
-        ];
+        $user = UserModel::where('nama', $request->nama)->first();
 
-        if(Auth::attempt($auth)) {
-            UserModel::update(['password' => bcrypt($request->nim)]);
+        if ($user->nim === $request->nim && $user->nama === $request->nama && $user->tgl_lahir === $request->tgl_lahir) {
+            $user->update(['password' => bcrypt($request->nim)]);
             return redirect('/login')->with('success', 'Password telah diganti dengan nim');
+        } else {
+            return back()->with('error', 'Data tidak sama');
         }
-        return back()->with('error', 'Data tidak sama');
     }
 
+    public function proses_ganti(Request $request)
+    {
+        $request->validate([
+            //username harus diisi, berupa string, minimal 3 karakter dan bernilai unik di table m_user kolom username
+            'password_lama' => 'required|min:5',
+            'password' => 'required|min:5|confirmed',
+            'password_confirmation' => 'required|min:5',
+        ]);
+        
+        $user = UserModel::find(auth()->user()->user_id);
+
+        if (Hash::check($request->password_lama, $user->password)) {
+            $user->update(['password' => bcrypt($request -> password)]);
+            return redirect('/beranda')->with('success', 'Ganti Password Berhasil');
+        } else {
+            return back()->with('error', 'Password Lama tidak sesuai');
+        }
+    }
 
     /**
      * Display the specified resource.
@@ -89,7 +120,6 @@ class AuthController extends Controller
         if(Auth::attempt($auth)) {
             return redirect('/beranda')->with('success', 'Login Berhasil');
         }
-
         return back()->with('error', 'Username or Password is wrong');
     }
 

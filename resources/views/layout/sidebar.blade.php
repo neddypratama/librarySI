@@ -96,6 +96,12 @@
               </li>
             @endif
             <li class="nav-item">
+              <a href="{{ url('/ganti_password') }}" class="nav-link {{ ($activeMenu == 'gantiPassword')?'active' : '' }}">
+                <i class="nav-icon fas fa-lock"></i>
+                <p>Ganti Password</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{ url('/logout') }}" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
                 <p>Logout</p>

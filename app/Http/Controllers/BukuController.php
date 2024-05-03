@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\BukuModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 use Yajra\DataTables\DataTables;
 
 class BukuController extends Controller
@@ -41,7 +43,8 @@ class BukuController extends Controller
             $btn .= '<form class="d-inline-block" method="POST" action="'. url('/buku/'.$buku->buku_id).'">' 
                     . csrf_field() . method_field('DELETE') .  
                     '<button type="submit" class="btn btn-danger btn-sm" 
-                    onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';      
+                    onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';   
+            $btn .= '<a href="'.url('/buku/' . $buku->buku_id . '/barcode').'" class="btn btn-success btn-sm">Barcode</a> ';    
             return $btn; 
         }) 
         ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html 
@@ -165,8 +168,23 @@ class BukuController extends Controller
 
             return redirect('/buku')->with('success', 'Data buku berhasil dihapus');
         }catch(\Illuminate\Database\QueryException $e){
-
-        return redirect('/buku')->with('error', 'Data buku gagal dihapus karena terdapat tabel lain yang terkait dengan data ini');
+            return redirect('/buku')->with('error', 'Data buku gagal dihapus karena terdapat tabel lain yang terkait dengan data ini');
+        }
     }
-}
+
+    public function barcode(string $id){
+        $data = BukuModel::find($id);
+
+        if (!$data) {
+            abort(404);
+        }
+
+        $generator = new BarcodeGeneratorPNG();
+        $barcode = $generator->getBarcode($data->buku_kode, $generator::TYPE_CODE_39);
+
+        $barcodePath = public_path('barcodes/' . $data->buku_kode . '.png');
+        file_put_contents($barcodePath, $barcode);
+
+        return Response::download($barcodePath);
+    }
 }
