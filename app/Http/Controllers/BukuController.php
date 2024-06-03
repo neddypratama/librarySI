@@ -40,11 +40,11 @@ class BukuController extends Controller
         ->addColumn('aksi', function ($buku) {  // menambahkan kolom aksi 
             $btn  = '<a href="'.url('/buku/' . $buku->buku_id).'" class="btn btn-info btn-sm">Detail</a> '; 
             $btn .= '<a href="'.url('/buku/' . $buku->buku_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> '; 
+            $btn .= '<a href="'.url('/buku/' . $buku->buku_id . '/barcode').'" class="btn btn-success btn-sm">Barcode</a> ';    
             $btn .= '<form class="d-inline-block" method="POST" action="'. url('/buku/'.$buku->buku_id).'">' 
                     . csrf_field() . method_field('DELETE') .  
                     '<button type="submit" class="btn btn-danger btn-sm" 
                     onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';   
-            $btn .= '<a href="'.url('/buku/' . $buku->buku_id . '/barcode').'" class="btn btn-success btn-sm">Barcode</a> ';    
             return $btn; 
         }) 
         ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html 
@@ -182,7 +182,7 @@ class BukuController extends Controller
         $generator = new BarcodeGeneratorPNG();
         $barcode = $generator->getBarcode($data->buku_kode, $generator::TYPE_CODE_39);
 
-        $barcodePath = public_path('barcodes/' . $data->buku_kode . '.png');
+        $barcodePath = public_path('barcodes/' . $data->judul . '.png');
         file_put_contents($barcodePath, $barcode);
 
         return Response::download($barcodePath);

@@ -218,6 +218,10 @@ class ActionController extends Controller
     }
 
     public function store(Request $request){
+        if ($request->judul == null) {
+            return redirect('/beranda')->with('error', 'Anda belum scan!'); 
+        }
+
         $user = UserModel::where('nama', $request->nama)->first();
         $buku = BukuModel::where('judul', $request->judul)->first();
 

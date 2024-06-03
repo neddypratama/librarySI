@@ -17,14 +17,16 @@
         @endif
         <div class="row">
           <label class="col-1 control-label col-form-label">Filter:</label>
-          <div class="col-3">
+          <div class="col-3 mb-2">
             <select class="form-control" id="level_id" name="level_id" required>
               <option value="">- Semua -</option>
               @foreach ($level as $item)
               <option value="{{$item->level_id}}">{{$item->level_nama}}</option>
               @endforeach
             </select>
-            <br>
+            <div class="mt-2 mb-4">
+              <span>Level</span>
+            </div>
           </div>
         </div>
         <table class="table table-bordered table-striped table-hover table-sm" id="table_user"> 
@@ -45,7 +47,7 @@
         pageLength: 25,
           processing: true,
           serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
-          dom: '<"html5buttons">Bfrtip',
+          dom: '<"d-flex justify-content-between align-items-center"lBf>tipr',
         language: {
             buttons: {
                 colvis : 'show / hide', // label button show / hide colvisRestore: "Reset Kolom" //lael untuk reset kolom ke default
@@ -56,22 +58,22 @@
             {
                 extend:'csv' ,
                 title:'Tabel User',
-                // exportOptions : columns: [0,1,2,3,4]
+                exportOptions : {columns: [0,1,2,3,4]}
             },
             {
                 extend: 'pdf', 
-                title:'Tabel User'
-                // exportOptions : columns: [0,1,2,3,4]
+                title:'Tabel User',
+                exportOptions : {columns: [0,1,2,3,4]}
             },
             {
                 extend: 'excel', 
-                title: 'Tabel User'
-                // exportOptions : columns: [0,1,2,3,4]
+                title: 'Tabel User',
+                exportOptions : {columns: [0,1,2,3,4]}
             },
             {
                 extend:'print',
-                title: 'Tabel User'
-                // exportOptions : columns: [0,1,2,3,4]
+                title: 'Tabel User',
+                exportOptions : {columns: [0,1,2,3,4]}
             },
         ],
           ajax: { 

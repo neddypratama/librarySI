@@ -43,6 +43,10 @@ class TransaksiController extends Controller
                 ->with('user')->with('buku'); 
 
                 //filter
+                if($request->user_id){
+                    $transaksis->where('user_id', $request->user_id);
+                }
+
                 if($request->buku_id){
                     $transaksis->where('buku_id', $request->buku_id);
                 }

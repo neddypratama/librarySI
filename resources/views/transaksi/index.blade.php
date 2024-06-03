@@ -1,7 +1,7 @@
 @extends('layout.template') 
  
 @section('content') 
-  <div class="card card-outline card-primary"> 
+  <div class="card card-outline"> 
       <div class="card-header"> 
         <h3 class="card-title">{{ $page->title }}</h3> 
         <div class="card-tools"> 
@@ -16,15 +16,33 @@
         <div class="alert alert-danger">{{session('error')}}</div>
         @endif
         <div class="row">
-          <label class="col-1 control-label col-form-label">Filter:</label>
-          <div class="col-3">
-            <select class="form-control" id="user_id" name="user_id" required>
-              <option value="">- Semua -</option>
-              @foreach ($user as $item)
-              <option value="{{$item->user_id}}">{{$item->nama}}</option>
-              @endforeach
-            </select>
-            <br>
+          <div class="col-6">
+            <label class="col-2 control-label col-form-label">Filter:</label>
+            <div class="col-4">
+              <select class="form-control" id="user_id" name="user_id" required>
+                <option value="">- Semua -</option>
+                @foreach ($user as $item)
+                <option value="{{$item->user_id}}">{{$item->nama}}</option>
+                @endforeach
+              </select>
+              <div class="mt-2 mb-3">
+                <span>User</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label class="col-2 control-label col-form-label">Filter:</label>
+            <div class="col-4">
+              <select class="form-control" id="buku_id" name="buku_id" required>
+                <option value="">- Semua -</option>
+                @foreach ($buku as $item)
+                <option value="{{$item->buku_id}}">{{$item->judul}}</option>
+                @endforeach
+              </select>
+              <div class="mt-2 mb-3">
+                <span>Buku</span>
+              </div>
+            </div>
           </div>
         </div>
         <table class="table table-bordered table-striped table-hover table-sm" id="table_transaksi"> 
@@ -41,11 +59,11 @@
 @push('js') 
   <script> 
     $(document).ready(function() { 
-      var dataUser = $('#table_transaksi').DataTable({ 
+      var dataTransaksi = $('#table_transaksi').DataTable({ 
         pageLength: 25,
           processing: true,
           serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
-          dom: '<"html5buttons">Bfrtip',
+          dom: '<"d-flex justify-content-between align-items-center"lBf>tipr',
         language: {
             buttons: {
                 colvis : 'show / hide', // label button show / hide colvisRestore: "Reset Kolom" //lael untuk reset kolom ke default
@@ -56,22 +74,22 @@
             {
                 extend:'csv' ,
                 title:'Tabel Transaksi',
-                // exportOptions : columns: [0,1,2,3,4]
+                exportOptions : {columns: [0,1,2,3,4,5,6,7]}
             },
             {
                 extend: 'pdf', 
-                title:'Tabel Transaksi'
-                // exportOptions : columns: [0,1,2,3,4]
+                title:'Tabel Transaksi',
+                exportOptions : {columns: [0,1,2,3,4,5,6,7]}
             },
             {
                 extend: 'excel', 
-                title: 'Tabel Transaksi'
-                // exportOptions : columns: [0,1,2,3,4]
+                title: 'Tabel Transaksi',
+                exportOptions : {columns: [0,1,2,3,4,5,6,7]}
             },
             {
                 extend:'print',
-                title: 'Tabel Transaksi'
-                // exportOptions : columns: [0,1,2,3,4]
+                title: 'Tabel Transaksi',
+                exportOptions : {columns: [0,1,2,3,4,5,6,7]}
             },
         ],
           ajax: { 
@@ -80,6 +98,7 @@
               "type": "POST",
               "data":function(d){
                 d.user_id = $('#user_id').val();
+                d.buku_id = $('#buku_id').val();
               }
           }, 
           columns: [ 
@@ -132,7 +151,10 @@
           ],
       }); 
       $('#user_id').on('change', function(){
-        dataUser.ajax.reload();
+        dataTransaksi.ajax.reload();
+      });
+      $('#buku_id').on('change', function(){
+        dataTransaksi.ajax.reload();
       });
     }); 
   </script> 

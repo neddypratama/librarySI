@@ -1,7 +1,7 @@
 @extends('layout.template') 
  
 @section('content') 
-  <div class="card card-outline card-primary"> 
+  <div class="card card-outline "> 
       <div class="card-header"> 
         <h3 class="card-title">{{ $page->title }}</h3> 
         <div class="card-tools"> 
@@ -38,7 +38,7 @@
           pageLength: 25,
           processing: true,
           serverSide: true,     // serverSide: true, jika ingin menggunakan server side processing 
-          dom: '<"html5buttons">Bfrtip',
+          dom: '<"d-flex justify-content-between align-items-center"lBf>tipr',
         language: {
             buttons: {
                 colvis : 'show / hide', // label button show / hide colvisRestore: "Reset Kolom" //lael untuk reset kolom ke default
@@ -49,22 +49,22 @@
             {
                 extend:'csv' ,
                 title:'Tabel Level',
-                // exportOptions : columns: [0,1,2,3,4]
+                exportOptions : {columns: [0,1,2]}
             },
             {
                 extend: 'pdf', 
-                title:'Tabel Level'
-                // exportOptions : columns: [0,1,2,3,4]
+                title:'Tabel Level',
+                exportOptions : {columns: [0,1,2]}
             },
             {
                 extend: 'excel', 
-                title: 'Tabel Level'
-                // exportOptions : columns: [0,1,2,3,4]
+                title: 'Tabel Level',
+                exportOptions : {columns: [0,1,2]}
             },
             {
                 extend:'print',
-                title: 'Tabel Level'
-                // exportOptions : columns: [0,1,2,3,4]
+                title: 'Tabel Level',
+                exportOptions : {columns: [0,1,2]}
             },
         ],
           ajax: { 
