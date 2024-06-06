@@ -12,7 +12,7 @@
         <div class="form-group row"> 
           <label class="col-2 control-label col-form-label">Kode Buku</label> 
           <div class="col-10"> 
-            <input type="text" class="form-control" id="buku_kode" name="buku_kode" value="{{ old('buku_kode') }}" required> 
+            <input type="text" class="form-control" id="buku_kode" name="buku_kode" value="{{ old('buku_kode') }}" readonly> 
             @error('buku_kode') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -21,7 +21,7 @@
         <div class="form-group row"> 
           <label class="col-2 control-label col-form-label">Judul</label> 
           <div class="col-10"> 
-            <input type="text" class="form-control" id="judul" name="judul" value="{{ old('judul') }}" required> 
+            <input type="text" class="form-control" id="judul" name="judul" placeholder="Judul Buku" value="{{ old('judul') }}" required> 
             @error('judul') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -30,7 +30,7 @@
         <div class="form-group row"> 
           <label class="col-2 control-label col-form-label">Pengarang</label> 
           <div class="col-10"> 
-            <input type="text" class="form-control" id="pengarang" name="pengarang" value="{{ old('pengarang') }}" required> 
+            <input type="text" class="form-control" id="pengarang" name="pengarang" placeholder="Pengarang Buku" value="{{ old('pengarang') }}" required> 
             @error('pengarang') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -39,7 +39,7 @@
         <div class="form-group row"> 
           <label class="col-2 control-label col-form-label">Penerbit</label> 
           <div class="col-10"> 
-            <input type="text" class="form-control" id="penerbit" name="penerbit" required> 
+            <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="Penerbit Buku" value="{{ old('penerbit') }}" required> 
             @error('penerbit') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -59,4 +59,10 @@
 @push('css') 
 @endpush 
 @push('js') 
+<script>
+  const lastBukuId = {{ $lastId }} + 1;
+  const bukuId = lastBukuId.toString().padStart(3, '0');
+  const bukuKodeInput = document.getElementById('buku_kode');
+  bukuKodeInput.value = 'BK' + (bukuId)
+</script>
 @endpush 

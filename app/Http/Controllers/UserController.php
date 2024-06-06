@@ -90,7 +90,7 @@ class UserController extends Controller
     public function store(Request $request){
         $request->validate([
             //username harus diisi, berupa string, minimal 3 karakter dan bernilai unik di table m_user kolom username
-            'nim' => 'required|string|min:3|unique:m_user,nim',
+            'nim' => 'required|string|min:8|unique:m_user,nim',
             'nama' => 'required|string|max:100',
             'password' => 'required|min:5',
             'level_id' => 'required|integer',

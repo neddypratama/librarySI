@@ -5,7 +5,7 @@
       <div class="card-header"> 
         <h3 class="card-title">{{ $page->title }}</h3> 
         <div class="card-tools"> 
-          <a class="btn btn-sm mt-1" href="{{ url('buku/create') }}">Tambah</a> 
+          <a class="btn btn-primary btn-sm mt-1" href="{{ url('buku/create') }}">Tambah</a> 
         </div> 
       </div> 
       <div class="card-body"> 
@@ -15,11 +15,13 @@
         @if (session('error'))
         <div class="alert alert-danger">{{session('error')}}</div>
         @endif
-        <table class="table table-bordered table-striped table-hover table-sm" id="table_buku"> 
-          <thead> 
-            <tr><th>ID</th><th>Kode Buku</th><th>Judul</th><th>Pengarang</th><th>Penerbit</th><th>Aksi</th></tr> 
-          </thead> 
-      </table> 
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover table-sm" id="table_buku"> 
+            <thead> 
+              <tr><th>ID</th><th>Kode Buku</th><th>Judul</th><th>Pengarang</th><th>Penerbit</th><th>Aksi</th></tr> 
+            </thead> 
+        </table> 
+        </div>
     </div> 
   </div> 
 @endsection 

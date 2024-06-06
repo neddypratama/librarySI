@@ -2,7 +2,7 @@
  
 @section('content') 
   <div class="card card-outline"> 
-      <div class="card-header"> 
+      <div class="card-header d-flex justify-content-between align-items-center"> 
         <h3 class="card-title">{{ $page->title }}</h3> 
       </div> 
       <div class="card-body"> 

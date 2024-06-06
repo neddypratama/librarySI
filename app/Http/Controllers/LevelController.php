@@ -42,7 +42,7 @@ class LevelController extends Controller
             $btn .= '<form class="d-inline-block" method="POST" action="'. url('/level/'.$level->level_id).'">' 
                     . csrf_field() . method_field('DELETE') .  
                     '<button type="submit" class="btn btn-danger btn-sm" 
-                    onclick="return confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';      
+                    onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';      
             return $btn; 
         }) 
         ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html 
@@ -61,11 +61,14 @@ class LevelController extends Controller
 
         $level = LevelModel::all(); //ambil data level untuk ditampilkan di form
         $activeMenu = 'level'; //set menu sedang aktif
+        $lastLevel = LevelModel::latest('level_id')->first();
+        $lastId = $lastLevel ? $lastLevel->level_id : 0;
 
         return view('level.create', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'level' => $level,
+            'lastId' => $lastId,
             'activeMenu' => $activeMenu
         ]);
     }
@@ -145,7 +148,7 @@ class LevelController extends Controller
             'level_nama' => $request-> level_nama
         ]);
 
-        return redirect('/level')->with('success', 'Data berhasil diubah');
+        return redirect('/level')->with('success', 'Data level berhasil diubah');
     }
 
     public function destroy(string $id){

@@ -26,16 +26,16 @@
         <div class="form-group row"> 
           <label class="col-2 control-label col-form-label">NIM</label> 
           <div class="col-10"> 
-            <input type="text" class="form-control" id="nim" name="nim" value="{{ old('nim') }}" required> 
+            <input type="text" class="form-control" id="nim" name="nim" placeholder="11111111" value="{{ old('nim') }}" pattern="\d*" inputmode="numeric" required> 
             @error('nim') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
           </div> 
         </div> 
         <div class="form-group row"> 
-          <label class="col-2 control-label col-form-label">nama</label> 
+          <label class="col-2 control-label col-form-label">Nama User</label> 
           <div class="col-10"> 
-            <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" required> 
+            <input type="text" class="form-control" id="nama" name="nama" placeholder="Akbar Rahmadani" value="{{ old('nama') }}" pattern="[A-Za-z\s]+" required> 
             @error('nama') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -53,7 +53,12 @@
         <div class="form-group row"> 
           <label class="col-2 control-label col-form-label">Password</label> 
           <div class="col-10"> 
-            <input type="password" class="form-control" id="password" name="password" required> 
+            <div class="d-flex">
+              <input type="password" class="form-control" placeholder="*****" name="password" id="inputPassword" value="{{ old('password') }}">
+              <button type="button" style="border: none" class="btn btn-light" id="tampilButton">
+                <span class="fas fa-eye"></span>
+              </button>
+            </div>
             @error('password') 
               <small class="form-text text-danger">{{ $message }}</small> 
             @enderror 
@@ -73,4 +78,14 @@
 @push('css') 
 @endpush 
 @push('js') 
+<script>
+  const passwordInput = document.getElementById('inputPassword');
+  const togglePassword = document.getElementById('tampilButton');
+
+  togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      togglePassword.innerHTML = type === 'password' ? '<span class="fas fa-eye"></span>' : '<span class="fas fa-eye-slash"></span>';
+  });
+</script>
 @endpush 

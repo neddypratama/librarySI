@@ -36,7 +36,7 @@ class AuthController extends Controller
             'title' => 'Ganti Password'
         ];
 
-        $activeMenu = 'gantiPassowrd';
+        $activeMenu = 'gantiPassword';
 
         return view('auth.gantiPassword',[
             'breadcrumb' => $breadcrumb,

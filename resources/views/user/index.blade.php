@@ -29,11 +29,13 @@
             </div>
           </div>
         </div>
-        <table class="table table-bordered table-striped table-hover table-sm" id="table_user"> 
-          <thead> 
-            <tr><th>ID</th><th>NIM</th><th>Nama</th><th>Tanggal Lahir</th><th>Level Pengguna</th><th>Aksi</th></tr> 
-          </thead> 
-      </table> 
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover table-sm" id="table_user"> 
+            <thead> 
+              <tr><th>ID</th><th>NIM</th><th>Nama</th><th>Tanggal Lahir</th><th>Level Pengguna</th><th>Aksi</th></tr> 
+            </thead> 
+        </table> 
+        </div>
     </div> 
   </div> 
 @endsection 

@@ -37,7 +37,7 @@ class="form-horizontal" enctype="multipart/form-data">
 <div class="form-group row"> 
   <label class="col-2 control-label col-form-label">NIM</label>
   <div class="col-10"> 
-    <input type="text" class="form-control" id="nim" name="nim" value="{{ old('nim', $user->nim) }}"> 
+    <input type="text" class="form-control" id="nim" name="nim" pattern="\d*" inputmode="numeric" value="{{ old('nim', $user->nim) }}"> 
     @error('nim') 
       <small class="form-text text-danger">{{ $message }}</small> 
     @enderror 
@@ -46,7 +46,7 @@ class="form-horizontal" enctype="multipart/form-data">
 <div class="form-group row"> 
   <label class="col-2 control-label col-form-label">Nama</label> 
   <div class="col-10"> 
-    <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama', $user->nama) }}" required> 
+    <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama', $user->nama) }}" pattern="[A-Za-z\s]+" required> 
     @error('nama') 
       <small class="form-text text-danger">{{ $message }}</small> 
     @enderror 

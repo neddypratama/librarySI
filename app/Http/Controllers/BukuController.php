@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\BukuModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Picqer\Barcode\BarcodeGeneratorPNG;
+use Milon\Barcode\DNS1D;
+use Milon\Barcode\DNS2D;
 use Yajra\DataTables\DataTables;
 
 class BukuController extends Controller
@@ -22,7 +23,7 @@ class BukuController extends Controller
 
         $activeMenu = 'buku'; //set saat menu aktif
         $buku = BukuModel::all();
-
+        
         return view('buku.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
@@ -63,11 +64,14 @@ class BukuController extends Controller
 
         $buku = BukuModel::all(); //ambil data buku untuk ditampilkan di form
         $activeMenu = 'buku'; //set menu sedang aktif
+        $lastBuku = BukuModel::latest('buku_id')->first();
+        $lastId = $lastBuku ? $lastBuku->buku_id : 0;
 
         return view('buku.create', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'buku' => $buku,
+            'lastId' => $lastId,
             'activeMenu' => $activeMenu
         ]);
     }
@@ -178,13 +182,19 @@ class BukuController extends Controller
         if (!$data) {
             abort(404);
         }
+        
+        $barcodeGenerator = new DNS2D();
+        
+        // Generate barcode in PNG format
+        $barcode = $barcodeGenerator->getBarcodePNG($data->buku_kode, 'QRCODE');
 
-        $generator = new BarcodeGeneratorPNG();
-        $barcode = $generator->getBarcode($data->buku_kode, $generator::TYPE_CODE_39);
-
+        // Define the path where the barcode will be saved
         $barcodePath = public_path('barcodes/' . $data->judul . '.png');
-        file_put_contents($barcodePath, $barcode);
+        
+        // Save the generated barcode to the defined path
+        file_put_contents($barcodePath, base64_decode($barcode));
 
+        // Return the barcode as a downloadable file
         return Response::download($barcodePath);
     }
 }
