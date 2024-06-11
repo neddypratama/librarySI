@@ -57,7 +57,7 @@ class AuthController extends Controller
         $request->validate([
             //username harus diisi, berupa string, minimal 3 karakter dan bernilai unik di table m_user kolom username
             'nim' => 'required|string|min:8|unique:m_user,nim',
-            'nama' => 'required|string|max:100',
+            'nama' => 'required|string|max:100|unique:m_user,nama',
             'tgl_lahir' => 'required|date',
             'password' => 'required|min:5|confirmed',
             'password_confirmation' => 'required|min:5',

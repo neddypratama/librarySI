@@ -190,10 +190,11 @@ class ActionController extends Controller
     
     public function kembali(string $id, string $kode) {
         $barcode = BukuModel::where('buku_kode', $kode)->first();
+        $transaksi = TransaksiModel::find($id);
 
-        if ($barcode) {
+        if ($barcode->buku_id == $transaksi->buku_id) {
             // Barcode found in the database
-            $transaksi = TransaksiModel::find($id);
+            
 
             $tgl_kembali = now()->toDateString();
             $date1 = new DateTime($transaksi->tgl_peminjaman);
@@ -211,9 +212,9 @@ class ActionController extends Controller
                 'denda'             => $denda,
             ]);
 
-            return redirect('/action/pengembalian')->with('success', 'Data berhasil diubah');
+            return redirect('/action/pengembalian')->with('success', 'Buku berhasil dikembalikan');
         } else {
-            return redirect('/action/pengembalian')->with('error', 'Data gagal diubah');
+            return redirect('/action/pengembalian')->with('error', 'Buku gagal dikembalikan');
         }
     }
 
@@ -226,21 +227,25 @@ class ActionController extends Controller
         $buku = BukuModel::where('judul', $request->judul)->first();
 
         $latest = TransaksiModel::latest('transaksi_kode')->first();
-        $string = $latest->transaksi_kode;
-        // Menemukan angka di dalam string menggunakan regex
-        preg_match('/\d+/', $string, $matches);
+        if ($latest == !null) {
+            $string = $latest->transaksi_kode;
+            // Menemukan angka di dalam string menggunakan regex
+            preg_match('/\d+/', $string, $matches);
 
-        // Mengambil angka dari hasil pencocokan regex
-        $number = intval($matches[0]);
+            // Mengambil angka dari hasil pencocokan regex
+            $number = intval($matches[0]);
 
-        // Menambahkan 1 ke angka
-        $number++;
+            // Menambahkan 1 ke angka
+            $number++;
 
-        // Format ulang angka ke dalam format tiga digit (misal: 002)
-        $newNumber = str_pad($number, 3, '0', STR_PAD_LEFT);
+            // Format ulang angka ke dalam format tiga digit (misal: 002)
+            $newNumber = str_pad($number, 3, '0', STR_PAD_LEFT);
 
-        // Mengganti angka lama dengan angka yang baru dalam string
-        $kode = preg_replace('/\d+/', $newNumber, $string);
+            // Mengganti angka lama dengan angka yang baru dalam string
+            $kode = preg_replace('/\d+/', $newNumber, $string);
+        } else {
+            $kode = 'TS001';
+        }
 
         $tgl_pinjam = now()->toDateString();
         $tgl_kembali = null;
@@ -255,6 +260,6 @@ class ActionController extends Controller
             'denda' => $denda,
         ]);
 
-        return redirect('/beranda')->with('success', 'Data peminjaman berhasil disimpan');
+        return redirect('/beranda')->with('success', 'Buku berhasil dipinjam');
     }
 }

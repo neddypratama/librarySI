@@ -43,7 +43,7 @@
                 <div class="input-group-text">
                     <span class="fas fa-envelope"></span>
                 </div>
-                <input type="text" class="form-control" placeholder="NIM" name="nim" @if($errors->has('nim')) value="" @else value="{{ old('nim') }}" @endif>
+                <input type="text" class="form-control" placeholder="NIM" name="nim" @if($errors->has('nim')) pattern="\d*" inputmode="numeric" value="" @else value="{{ old('nim') }}" @endif>
             </div>
             @error('nim')
                 <small class="form-text text-danger">{{ $message }}</small> 
@@ -52,7 +52,7 @@
                 <div class="input-group-text">
                     <span class="fas fa-user"></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Nama" name="nama" @if($errors->has('nama')) value="" @else value="{{ old('nama') }}" @endif>
+                <input type="text" class="form-control" placeholder="Nama" name="nama" @if($errors->has('nama')) pattern="[A-Za-z\s]+" value="" @else value="{{ old('nama') }}" @endif>
             </div>
             @error('nama')
                 <small class="form-text text-danger">{{ $message }}</small> 
